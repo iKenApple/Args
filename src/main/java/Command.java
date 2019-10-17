@@ -4,36 +4,36 @@ import java.util.ListIterator;
 import java.util.Map;
 
 public class Command {
-    private Map<String, String> command;
+    private Map<String, String> map;
     public Command(String commands) {
-        command = new HashMap<>();
-        ListIterator<String> commandIterator = Arrays.asList(commands.split(" ")).listIterator();
-        while(commandIterator.hasNext()) {
-            String value = commandIterator.next().substring(1);
-            if (commandIterator.hasNext()) {
-                String nextValue = commandIterator.next();
-                if (isValue(nextValue)) {
-                    command.put(value, nextValue);
-                } else {
-                    commandIterator.previous();
-                    command.put(value, "true");
+        map = new HashMap<>();
+        ListIterator<String> iterator = Arrays.asList(commands.split("\\s+")).listIterator();
+        while (iterator.hasNext()) {
+            String key = iterator.next().substring(1);
+
+            if (iterator.hasNext()) {
+                String value = iterator.next();
+                if (isValue(value))
+                    map.put(key, value);
+                else {
+                    iterator.previous();
+                    map.put(key, null);
                 }
             }
+
         }
     }
 
-    private boolean isValue(String value) {
-        if (value.charAt(0) == '-') {
+    private boolean isValue (String value) {
+        if (value.charAt(0) == '-')
             if (value.charAt(1) >= '0' && value.charAt(1) <= '9')
                 return true;
-
-            return false;
-        }
-
+            else
+                return false;
         return true;
     }
 
     public String getValue(String str) {
-        return command.get(str);
+        return map.get(str);
     }
 }

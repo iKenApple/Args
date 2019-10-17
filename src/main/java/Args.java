@@ -1,7 +1,6 @@
 public class Args {
-    private final Schema schema;
-    private final Command command;
-
+    private Schema schema;
+    private Command command;
     public Args(String schemas, String commands) {
         this.schema = new Schema(schemas);
         this.command = new Command(commands);
